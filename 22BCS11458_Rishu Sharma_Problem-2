@@ -1,0 +1,40 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Student {
+    String name;
+    double marks;
+
+    public Student(String name, double marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - Marks: " + marks;
+    }
+}
+
+public class StudentFilterSort {
+    public static void main(String[] args) {
+        List<Student> students = Arrays.asList(
+            new Student("Alice", 80),
+            new Student("Bob", 65),
+            new Student("Charlie", 90),
+            new Student("David", 72),
+            new Student("Eve", 88)
+        );
+
+        // Using Stream API with Lambda Expressions
+        List<String> topStudents = students.stream()
+            .filter(s -> s.marks > 75) // Filter students scoring above 75%
+            .sorted((s1, s2) -> Double.compare(s2.marks, s1.marks)) // Sort by marks (descending)
+            .map(s -> s.name) // Extract only names
+            .collect(Collectors.toList()); // Collect as a list
+
+        // Display top students
+        System.out.println("Top Students (Marks > 75%):");
+        topStudents.forEach(System.out::println);
+    }
+}
